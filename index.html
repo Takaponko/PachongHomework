@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自然风光摄影展</title>
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 20px;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            padding: 50px 40px;
+        }
+        
+        /* 头部样式 */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 30px;
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 5px;
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            border-radius: 5px;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            color: #2c3e50;
+            font-weight: 800;
+            margin-top: 10px;
+            letter-spacing: -1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            color: #3498db;
+            font-weight: 500;
+            margin: 0 auto 25px;
+            max-width: 700px;
+            line-height: 1.4;
+            font-style: italic;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+        
+        /* 描述样式 */
+        .description {
+            font-size: 1.15rem;
+            color: #555;
+            max-width: 800px;
+            margin: 30px auto 60px;
+            text-align: center;
+            line-height: 1.8;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .description::before, .description::after {
+            content: """;
+            font-size: 4rem;
+            color: #3498db;
+            opacity: 0.2;
+            position: absolute;
+            font-family: Georgia, serif;
+        }
+        
+        .description::before {
+            top: -30px;
+            left: 0;
+        }
+        
+        .description::after {
+            content: """;
+            bottom: -60px;
+            right: 0;
+        }
+        
+        /* 图片区域样式 */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .image-card {
+            width: 100%;
+            max-width: 350px;
+            background: #fff;
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            position: relative;
+        }
+        
+        .image-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .image-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255,255,255,0) 60%, rgba(0,0,0,0.7));
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-card:hover::before {
+            opacity: 1;
+        }
+        
+        .image-container {
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .image-card:hover .image {
+            transform: scale(1.1);
+        }
+        
+        /* 图片示例样式 */
+        .mountain-img {
+            background: linear-gradient(45deg, #11998e, #38ef7d);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255,255,255,0.8);
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .lake-img {
+            background: linear-gradient(45deg, #0072ff, #00c6ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255,255,255,0.8);
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .ocean-img {
+            background: linear-gradient(45deg, #654ea3, #da98b4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255,255,255,0.8);
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        /* 图注样式 */
+        .caption {
+            padding: 25px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .caption h3 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .caption h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 3px;
+        }
+        
+        .caption p {
+            color: #7f8c8d;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+        
+        .caption .date {
+            font-size: 0.9rem;
+            color: #3498db;
+            font-weight: 600;
+            margin-top: 15px;
+            display: block;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            margin-top: 80px;
+            text-align: center;
+            padding: 25px;
+            color: #7f8c8d;
+            font-size: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: #ff5e62;
+            text-decoration: underline;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            h1 {
+                font-size: 3.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .gallery {
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .description {
+                font-size: 1.05rem;
+            }
+            
+            .gallery {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+            
+            .image-card {
+                max-width: 450px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            .image-container {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>自然风光摄影展</h1>
+            <h2>探索世界之美，感受自然魅力</h2>
+        </header>
+        
+        <div class="description">
+            <p>欢迎来到自然风光摄影展！这里汇集了世界各地摄影师捕捉到的壮美瞬间。</p>
+            <p>每一张照片都是对大自然鬼斧神工的礼赞，展现了大自然的奇妙与壮丽。</p>
+            <p>我们精选了三个主题作品，让您在静谧中感受山河湖海的魅力，在光影中体味四季变幻的奇妙。</p>
+        </div>
+        
+        <div class="gallery">
+            <!-- 第一张图片 -->
+            <div class="image-card">
+                <div class="image-container mountain-img">
+                    [山脉景观照片]
+                </div>
+                <div class="caption">
+                    <h3>壮丽的山脉</h3>
+                    <p>阿尔卑斯山脉的壮丽景色，金色的阳光洒在雪峰上，创造出令人窒息的自然奇观。山脉与云海的交融展示了自然的雄伟与壮阔。</p>
+                    <span class="date">摄影：Michael Adams | 地点：瑞士阿尔卑斯</span>
+                </div>
+            </div>
+            
+            <!-- 第二张图片 -->
+            <div class="image-card">
+                <div class="image-container lake-img">
+                    [湖泊景观照片]
+                </div>
+                <div class="caption">
+                    <h3>静谧的湖泊</h3>
+                    <p>加拿大班夫国家公园的露易丝湖，湖水犹如一块翠绿的宝石，倒映着周围的松林与雪山。宁静的水面完美呈现了自然和谐的画卷。</p>
+                    <span class="date">摄影：Sarah Johnson | 地点：加拿大班夫</span>
+                </div>
+            </div>
+            
+            <!-- 第三张图片 -->
+            <div class="image-card">
+                <div class="image-container ocean-img">
+                    [海洋景观照片]
+                </div>
+                <div class="caption">
+                    <h3>浩瀚的海洋</h3>
+                    <p>夏威夷大岛的海岸线，汹涌的浪花拍打着火山岩岸，展现出大海的力量与永恒。日出时分金色的光芒与深蓝的海水形成绝美对比。</p>
+                    <span class="date">摄影：David Wilson | 地点：夏威夷大岛</span>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 自然风光摄影展 | 设计：创意工作室 | <a href="#">了解更多作品</a></p>
+        </footer>
+    </div>
+</body>
+</html>
